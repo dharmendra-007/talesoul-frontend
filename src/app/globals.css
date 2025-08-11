@@ -120,3 +120,43 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+
+
+/* Custom  utiliti classes */
+@layer utilities{
+  /* Center in row */
+  .center {
+    @apply flex justify-center items-center;
+  }
+
+  /* Center in column */
+  .center-col {
+    @apply flex flex-col justify-center items-center;
+  }
+
+  /* Fullscreen center */
+  .full-center {
+    @apply flex justify-center items-center min-h-screen;
+  }
+
+  /* Space-between center vertically */
+  .between-center {
+    @apply flex justify-between items-center;
+  }
+
+  /* Evenly spaced items centered vertically */
+  .evenly-center {
+    @apply flex justify-evenly items-center;
+  }
+  /* Button */
+  .button{
+    @apply bg-[#D96F62] hover:bg-[#d97062f6] font-bold
+  }
+  
+  .container{
+    @apply min-h-screen w-screen
+  }
+}
