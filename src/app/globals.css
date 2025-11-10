@@ -155,4 +155,7 @@
   .container{
     @apply min-h-screen w-screen
   }
+  .logo{
+    @apply text-[#F16D5C] font-semibold lg:text-3xl text-2xl 
+  }
 }
