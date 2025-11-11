@@ -74,8 +74,10 @@ export default function Carousel({
             {/* content */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[90%] min-h-40 rounded-2xl bg-white/20 backdrop-blur-xs z-50 text-[40px]">
                 {safeImages.map((_, i) => (
-                    <div key={i} className={cn(i === index ? "block" : "hidden", "mb-4", "text-3xl font-bold p-6 leading-[120%] h-full bottom-1/2", data[i]?.color === "#FFFFFF" ? "text-white" : "text-black")}>
+                    <div key={i} className={cn(i === index ? "block" : "hidden", "mb-4", "text-2xl font-medium p-6 leading-[1.4] h-full bottom-1/2", data[i]?.color === "#FFFFFF" ? "text-white" : "text-black")}>
+                        &quot;
                         {data[i]?.content}
+                        &quot;
                     </div>
                 ))}
             </div>
