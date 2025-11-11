@@ -22,9 +22,10 @@ export default function NavBar() {
             className={
               link.type === "link"
                 ? ""
-                : "bg-[#F16D5C] px-4 py-2 rounded-xl text-white font-semibold"
+                : "bg-primary px-4 py-2 rounded-xl text-white font-semibold"
             }
             href={link.link}
+            key={index}
           >
             {link.linkText}
           </Link>

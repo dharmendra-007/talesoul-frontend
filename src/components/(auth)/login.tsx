@@ -13,39 +13,39 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { signInFormSchema } from "@/validation/authSchema"
+import { logInFormSchema } from "@/validation/authSchema"
 import Image from "next/image";
 import Link from "next/link"
 import { useState } from "react"
 import { Eye, EyeClosed } from "lucide-react"
 
-export default function SignInForm() {
+export default function LoginForm() {
     const [showPassword, setShowPassword] = useState(false);
-    const form = useForm<z.infer<typeof signInFormSchema>>({
-        resolver: zodResolver(signInFormSchema),
+    const form = useForm<z.infer<typeof logInFormSchema>>({
+        resolver: zodResolver(logInFormSchema),
         defaultValues: {
-            userId: "",
+            phoneNumber: "",
             password: ""
         },
     })
 
-    function onSubmit(values: z.infer<typeof signInFormSchema>) {
+    function onSubmit(values: z.infer<typeof logInFormSchema>) {
         console.log(values)
     }
 
     return (
-        <div className="flex flex-col gap-2 sm:gap-4">
+        <div className="flex flex-col gap-1 sm:gap-4">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <FormField
                         control={form.control}
-                        name="userId"
+                        name="phoneNumber"
                         render={({ field }) => (
                             <FormItem className="gap-2">
-                                <FormLabel className="text-[1rem] text-[#3A3A3A] font-semibold">Email Id or Phone Number</FormLabel>
+                                <FormLabel >Mobile Number</FormLabel>
                                 <FormControl>
                                     <Input
-                                        placeholder="Enter your email id or phone number"
+                                        placeholder="Enter your number"
                                         className="h-[3rem] md:h-[3.5rem] lg:h-[3rem] bg-white"
                                         {...field} />
                                 </FormControl>
@@ -58,7 +58,7 @@ export default function SignInForm() {
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-[1rem] text-[#3A3A3A] font-semibold">Password</FormLabel>
+                                <FormLabel>Password</FormLabel>
                                 <FormControl>
                                     <div className="relative">
                                         <Input
@@ -87,8 +87,8 @@ export default function SignInForm() {
                     <Button type="submit" className="w-full h-[3rem] md:h-[3.5rem] lg:h-[3rem]" variant="primaryButton">Sign In</Button>
                 </form>
             </Form>
-            <a className="w-full flex justify-end text-[1rem] text-[#D96F62] font-semibold cursor-pointer">Forgot Password?</a>
-            <div className="relative text-center py-2 md:py-4">
+            <a className="w-full flex justify-end text-primary font-medium cursor-pointer text-[14px]">Forgot Password?</a>
+            <div className="relative text-center">
                 <span className="text-[1rem] text- bg-background px-4 relative z-10">
                     Or
                 </span>
@@ -97,7 +97,7 @@ export default function SignInForm() {
 
             <Button variant="secondaryButton" className="w-full h-[3rem] md:h-[3.5rem] lg:h-[3rem] font-[400]"><Image src="/images/Google.svg" height={24} width={24} alt="google logo" className="mr-2" />Sign in with Google</Button>
 
-            <span className="text-center text-[#3A3A3A] text-[1rem] font-[400]">Don&apos;t you have an account?<Link href={"/signup"} className="text-[#D96F62] ml-1">Sign up</Link></span>
+            <span className="text-center para2">Don&apos;t you have an account?<Link href={"/signup"} className="ml-1 font-medium text-secondary">Sign up</Link></span>
         </div>
     )
 }

@@ -47,8 +47,4 @@ export default function Drawer({ navLinks }: DrawerProps) {
       </SheetContent>
     </Sheet>
   );
-}
-
-
-8917592361
-// jio  
+} 
