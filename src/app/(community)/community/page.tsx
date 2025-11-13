@@ -3,7 +3,7 @@ import React from 'react'
 export default function page() {
   return (
     <div className='h-screen w-screen bg-orange-400 flex items-center justify-center'>
-        <h1 className='text-white text-3xl'>Services page</h1>
+        <h1 className='text-white text-3xl'>Community Page</h1>
     </div>
   )
 }
