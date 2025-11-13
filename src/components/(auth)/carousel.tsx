@@ -16,7 +16,7 @@ interface CarouselProps {
 
 export default function Carousel({
     data,
-    interval = 4000,
+    interval = 6000,
     className = "",
 }: CarouselProps) {
     const [index, setIndex] = useState(0);

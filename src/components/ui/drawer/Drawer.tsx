@@ -3,6 +3,7 @@ import {
   Sheet,
   SheetContent,
   SheetFooter,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
@@ -23,16 +24,17 @@ export default function Drawer({ navLinks }: DrawerProps) {
       <SheetTrigger asChild>
         <Menu />
       </SheetTrigger>
-      <SheetContent className="pt-10 px-4">
-        <div className="flex flex-col gap-2 w-full">
+      <SheetTitle className="sr-only"/>
+      <SheetContent className="px-4 z-[60]">
+        <div className="flex flex-col gap-2 w-full pt-10">
           {navLinks.map((link, index) => (
             <Link href={link.link} key={index}>
               <Button
                 variant="outline"
                 className={
                   link.type === "link"
-                    ? "w-full"
-                    : "bg-[#F16D5C] px-4 py-2 rounded-xl text-white font-semibold w-full"
+                    ? "w-full py-5"
+                    : "bg-[#F16D5C] px-4 py-5 rounded-4xl text-white font-semibold w-full"
                 }
               >
                 {link.linkText}
@@ -42,7 +44,7 @@ export default function Drawer({ navLinks }: DrawerProps) {
         </div>
 
         <SheetFooter className="flex justify-center items-center text-center">
-          <p>All rights reaserved @TaleSoul</p>
+          <p className="para2">All rights reaserved @TaleSoul</p>
         </SheetFooter>
       </SheetContent>
     </Sheet>
