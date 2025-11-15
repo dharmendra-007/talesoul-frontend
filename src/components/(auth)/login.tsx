@@ -95,7 +95,7 @@ export default function LoginForm() {
                 <div className="absolute top-1/2 left-0 w-full border-t border-[#BCBCBC] z-0" />
             </div>
 
-            <Button variant="secondaryButton" className="w-full h-[3rem] md:h-[3.5rem] lg:h-[3rem] font-[400]"><Image src="/images/Google.svg" height={24} width={24} alt="google logo" className="mr-2" />Sign in with Google</Button>
+            <Button variant="secondaryButton" className="w-full h-[3rem] md:h-[3.5rem] lg:h-[3rem] font-[400] border-white hover:bg-white !text-secondary-foreground"><Image src="/images/Google.svg" height={24} width={24} alt="google logo" className="mr-2" />Sign in with Google</Button>
 
             <span className="text-center para2">Don&apos;t you have an account?<Link href={"/signup"} className="ml-1 font-medium text-secondary">Sign up</Link></span>
         </div>

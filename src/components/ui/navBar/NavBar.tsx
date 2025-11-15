@@ -18,7 +18,7 @@ const navLinks = [
 export default function NavBar () {
   const pathname = usePathname()
   return (
-    <div className='h-[80px] w-screen bg-background flex justify-between items-center lg:px-30 px-8 xl:shadow-[0_4px_18px_0_#00000014] z-50 fixed'>
+    <div className='h-[70px] w-screen bg-background flex justify-between items-center lg:px-30 px-8 xl:shadow-[0_4px_18px_0_#00000014] z-50 fixed'>
       <Logo />
       <div className='hidden xl:flex items-center gap-6'>
         {navLinks.map((link, index) => {
