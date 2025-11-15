@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import NavBar from '@/components/ui/navBar/NavBar'
+import Footer from '@/components/ui/footer/footer'
 
 export const metadata: Metadata = {
   title: 'Talesoul - coming soon',
@@ -16,6 +17,7 @@ export default function RootLayout ({
     <>
       <NavBar />
       {children}
+      <Footer/>
     </>
   )
 }

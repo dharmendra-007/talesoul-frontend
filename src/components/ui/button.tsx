@@ -21,8 +21,8 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
         primaryButton: "bg-primary text-primary-foreground shadow-xs bg-primary text-[1rem] rounded-full hover:bg-[#e07d70] cursor-pointer",
-        secondaryButton: "bg-primary text-[#3A3A3A] shadow-xs bg-white text-[1rem] rounded-lg mt-2 cursor-pointer",
-        cta: "bg-gradient-to-b from-[#D96F62] to-[#733B34] hover:bg-[#a23232] text-white rounded-full transition-all"
+        secondaryButton: "border bg-background shadow-xs hover:bg-primary hover:text-background dark:bg-input/30 dark:border-input dark:hover:bg-input/50 cursor-pointer border-[1.5px] border-primary text-primary py-5 text-base",
+        cta: "bg-gradient-to-b from-[#D96F62] to-[#733B34] hover:bg-[#a23232] text-white rounded-full transition-all cursor-pointer"
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
