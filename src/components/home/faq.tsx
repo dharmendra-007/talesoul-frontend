@@ -1,7 +1,6 @@
 "use client";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
@@ -35,7 +34,7 @@ export default function FaqSection() {
         <div className="w-full lg:w-1/2 flex flex-col gap-4">
           <h2 className="text-4xl font-bold text-[#6B2E25] text-center lg:text-left">Frequently Asked Questions</h2>
           <p className="text-gray-600 text-center lg:text-left">
-            Can't find the answer you are looking for? <br />
+            Can&apos;t find the answer you are looking for? <br />
             <span className="underline cursor-pointer">Reach Out to Us</span>
           </p>
         </div>

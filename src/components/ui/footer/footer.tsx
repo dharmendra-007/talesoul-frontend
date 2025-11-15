@@ -21,7 +21,7 @@ export default function Footer () {
           <h4 className='!font-semibold !text-white caption'>Subscribe</h4>
 
           <p className='caption !text-white max-w-xs'>
-            Subscribe to stay tuned for new web-design and latest updates. Let's
+            Subscribe to stay tuned for new web-design and latest updates. Let&apos;s
             do it!
           </p>
 

@@ -6,7 +6,7 @@ export default function About () {
   return (
     <section id='about' className='lg:px-30 px-8 flex flex-col gap-4 py-20 lg:py-30'>
       <span className='heading2 !text-[#733B34] text-center !font-semibold'>
-        Long-term mentorship isn't just better - it's faster
+        Long-term mentorship isn&apos;t just better - it&apos;s faster
       </span>
       <span className='para1 text-center'>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

@@ -26,7 +26,7 @@ export const TestimonialCard: FC<TestimonialCardProps> = ({
         className
       )}
     >
-      <p className="text-gray-600 text-[15px] leading-relaxed">"{message}"</p>
+      <p className="text-gray-600 text-[15px] leading-relaxed">&quot;{message}&quot;</p>
 
       <div className="flex items-center gap-3 mt-6">
         <Image
