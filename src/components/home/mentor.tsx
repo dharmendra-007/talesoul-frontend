@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Form, FormField, FormItem, FormControl } from '@/components/ui/form'
-import MentorCard from '../ui/cards/mentorCard'
+import PrimaryMentorCard from '../ui/cards/primaryMentorCard'
 import { Button } from '../ui/button'
 
 type SearchFormValues = {
@@ -84,7 +84,7 @@ export default function Mentor () {
 
       <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-10 py-10'>
         {mentors.map(mentor => (
-          <MentorCard
+          <PrimaryMentorCard
             key={mentor.name}
             image={mentor.image}
             name={mentor.name}
