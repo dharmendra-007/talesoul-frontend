@@ -1,9 +1,10 @@
+import MentorList from '@/components/consultant/mentorList'
 import React from 'react'
 
 export default function page() {
   return (
-    <div className='h-screen w-screen bg-orange-400 flex items-center justify-center'>
-        <h1 className='text-white text-3xl'>Consultant Page</h1>
+    <div className="flex flex-col min-h-screen pt-10">
+      <MentorList/>
     </div>
   )
 }

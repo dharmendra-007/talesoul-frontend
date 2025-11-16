@@ -1,6 +1,6 @@
 import z from "zod";
 
-const phoneNumberRegex = /^[6-9]\d{9}$/;
+export const phoneNumberRegex = /^[6-9]\d{9}$/;
 
 const userBaseSchema = z.object({
     email: z

@@ -166,9 +166,21 @@
     @apply text-primary font-medium text-[30px] md:text-[36px];
   }
 
+  .heading3 {
+    @apply font-semibold text-secondary text-[24px] md:text-[28px] 
+  }
+
+  .heading4 {
+    @apply font-medium text-secondary text-[23px] md:text-[26px]
+  }
+
+  .heading5 {
+    @apply font-medium text-[20px] md:text-[22px]
+  }
+
   /* paragraphs */
   .para1 {
-    @apply text-[1rem] text-secondary-foreground;
+    @apply text-[0.9rem] md:text-[1rem] text-secondary-foreground;
   }
 
   .para2 {

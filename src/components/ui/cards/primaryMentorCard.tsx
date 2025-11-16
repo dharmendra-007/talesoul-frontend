@@ -12,7 +12,7 @@ interface MentorCardProps {
   rating: number;
 }
 
-export default function MentorCard({
+export default function PrimaryMentorCard({
   image,
   name,
   role,
