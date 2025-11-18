@@ -19,7 +19,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "Talesoul - coming soon",
+  title: "Talesoul - ",
   description: "TaleSoul is the world's first emotional currency platform where your feelings have value. Share emotions, earn SoulCoins, connect with guides, and join a kind, judgment-free community.",
 };
 
