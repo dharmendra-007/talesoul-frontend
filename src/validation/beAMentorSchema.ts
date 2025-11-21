@@ -1,12 +1,16 @@
 import z from "zod";
 
 const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB
+const RESUME_MAX_SIZE = 3 * 1024 * 1024; // 1 MB
+
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
   "image/png",
   "image/webp",
 ];
+
+const ACCEPTED_RESUME_TYPES = ["application/pdf"];
 
 export const pincodeRegex = /^[1-9][0-9]{5}$/;
 import { phoneNumberRegex } from "./authSchema";
@@ -39,13 +43,13 @@ export const beMentorSchema = z.object({
     .min(1, "Phone number is required")
     .regex(phoneNumberRegex, "Enter a valid 10-digit phone number"),
 
-  dob: z
-    .string(),
+  dob: z.string(),
 
   address: z
     .string()
     .min(1, "Address is required")
-    .min(3, "Address must have at least 3 characters"),
+    .min(3, "Address must have at least 3 characters")
+    .max(200, "Address should not exceed 200 characters"),
 
   state: z.string().min(1, "State is required"),
 
@@ -75,6 +79,7 @@ export const beMentorSchema = z.object({
     .string()
     .min(1, "Current role is required")
     .max(50, "Current role should not exceed 50 characters"),
+
   tags: z
     .array(
       z.string()
@@ -83,6 +88,19 @@ export const beMentorSchema = z.object({
     )
     .min(1, "At least 1 tag is required")
     .max(5, "You can select up to 5 tags"),
+
+  bio: z
+    .string()
+    .min(10, "Bio must be at least 10 characters")
+    .max(500, "Bio should not exceed 500 characters"),
+
+  resume: z
+    .instanceof(File, { message: "Resume is required" })
+    .refine(
+      (file) => ACCEPTED_RESUME_TYPES.includes(file.type),
+      "Only PDF files are allowed."
+    )
+    .refine((file) => file.size <= RESUME_MAX_SIZE, "Max file size is 1MB"),
 });
 
 export type BeMentorFormType = z.infer<typeof beMentorSchema>;

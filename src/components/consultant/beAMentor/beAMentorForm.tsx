@@ -24,9 +24,14 @@ import {
   SelectItem
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
+import { apiFetch } from '@/lib/api'
+import { toast } from 'sonner'
 
 export default function BeAMentorForm () {
   const [selectedState, setSelectedState] = useState('')
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<BeMentorFormType>({
     resolver: zodResolver(beMentorSchema),
@@ -45,13 +50,79 @@ export default function BeAMentorForm () {
       currentRole: '',
       dob: '',
       image: undefined,
-      tags: []
+      tags: [],
+      bio: "",
+      resume: undefined
     }
   })
 
-  const onSubmit = (values: BeMentorFormType) => {
-    console.log('FORM VALUES → ', values)
-  }
+  const onSubmit = async (values: BeMentorFormType) => {
+    try {
+      setLoading(true);
+
+      const formData = new FormData();
+      
+      formData.append("full_name", values.fullName);
+      formData.append("email", values.email);
+      formData.append("phone", values.phone);
+      formData.append("address", values.address);
+      formData.append("state", values.state);
+      formData.append("city", values.city);
+      formData.append("pincode", values.pincode);
+      formData.append("dob", values.dob || "");
+      formData.append("field_of_expertise", values.fieldOfExpertise);
+      formData.append("sub_field", values.subField);
+      formData.append(
+        "years_of_experience",
+        values.yearsOfExperience.replace(/\D/g, "")
+      );
+      formData.append("organization", values.organization);
+      formData.append("current_role", values.currentRole);
+      formData.append("bio", values.bio);
+
+      formData.append("tags", JSON.stringify(values.tags));
+
+      if (values.image instanceof File) {
+        formData.append("image", values.image);
+      }
+
+      if (values.resume instanceof File) {
+        formData.append("resume", values.resume);
+      }
+
+      await apiFetch("/consultations/mentor/register/", {
+        method: "POST",
+        body: formData,
+      });
+
+      toast.success("Mentor registered successfully 🎉");
+    } catch (error: unknown) {
+      if (error instanceof Error && "response" in error) {
+        const backend = (error as { response?: unknown }).response;
+
+        if (typeof backend === "object" && backend !== null) {
+          Object.entries(backend).forEach(([field, val]) => {
+            if (Array.isArray(val) && typeof val[0] === "string") {
+              form.setError(field as keyof BeMentorFormType, {
+                type: "server",
+                message: val[0],
+              });
+
+              toast.error(`${field}: ${val[0]}`);
+            }
+          });
+        }
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Unknown error occurred");
+      }
+    } finally {
+        setLoading(false);
+    }
+  };
+
+
 
   return (
     <div className='w-full mx-auto pb-10'>
@@ -245,6 +316,26 @@ export default function BeAMentorForm () {
             <h2 className='para1 font-medium'>Professional Background</h2>
 
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              {/* Resume */}
+            <FormField
+                  control={form.control}
+                  name='resume'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='para2 font-normal'>Resume <span className='text-[#E40404]'>*</span></FormLabel>
+                      <FormControl>
+                        <Input
+                          type='file'
+                          accept='.pdf'
+                          onChange={e => field.onChange(e.target.files?.[0])}
+                          className='para2'
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
               {/* FIELD OF EXPERTISE */}
               <FormField
                 control={form.control}
@@ -334,6 +425,28 @@ export default function BeAMentorForm () {
                         placeholder='Enter company or freelance'
                         {...field}
                       />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Bio */}
+              <FormField
+                control={form.control}
+                name='bio'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className='para2 font-normal'>Bio <span className='text-[#E40404]'>*</span></FormLabel>
+                    <FormControl>
+                      <div className="flex flex-col items-end gap-2">
+                      <Textarea
+                        placeholder='Add a bio...'
+                        {...field}
+                        className='min-h-28 resize-y'
+                      />
+                      <span className={cn("text-xs text-muted", field.value.length > 500 && "text-destructive", field.value.length < 10 && "text-destructive")}>{`${field.value.length}/500 characters`}</span>
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -446,7 +559,9 @@ export default function BeAMentorForm () {
           {/* SUBMIT BUTTON */}
           <div className='w-full flex justify-end'>
             <Button type='submit' variant='primaryButton'>
-              Submit
+              {
+                loading ? "Registering..." : "Submit"
+              }
             </Button>
           </div>
         </form>

@@ -18,9 +18,28 @@ import Image from "next/image";
 import Link from "next/link"
 import { useState } from "react"
 import { Eye, EyeClosed } from "lucide-react"
+import { apiFetch } from "@/lib/api"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
+
+interface LoginResponse {
+    access: string;
+    user: {
+        id: number;
+        email: string;
+        username: string;
+        phone: string;
+        name: string;
+    };
+}
 
 export default function LoginForm() {
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [serverError, setServerError] = useState<string | null>(null);
+
+    const router = useRouter()
+
     const form = useForm<z.infer<typeof logInFormSchema>>({
         resolver: zodResolver(logInFormSchema),
         defaultValues: {
@@ -29,9 +48,40 @@ export default function LoginForm() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof logInFormSchema>) {
-        console.log(values)
+    const onSubmit = async (values: z.infer<typeof logInFormSchema>) => {
+    setLoading(true);
+    setServerError(null);
+
+    try {
+        const payload = {
+        identifier: values.phoneNumber,
+        password: values.password,
+        };
+
+        const data = await apiFetch<LoginResponse>(
+        "/accounts/login/",
+        {
+            method: "POST",
+            body: JSON.stringify(payload),
+        }
+        );
+
+        localStorage.setItem("talesoul_access", data.access);
+        toast.success("Logged in successfully!");
+        router.push("/");
+
+    } catch (error: unknown) {
+        let message = "Failed to log in";
+        if (error instanceof Error) {
+        message = error.message;
+        }
+        setServerError(message);
+        toast.error(message);
+    } finally {
+        setLoading(false);
     }
+    };
+
 
     return (
         <div className="flex flex-col gap-1 sm:gap-4">
@@ -84,7 +134,11 @@ export default function LoginForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="w-full h-[3rem] md:h-[3.5rem] lg:h-[3rem]" variant="primaryButton">Sign In</Button>
+                    <Button type="submit" className="w-full h-[3rem] md:h-[3.5rem] lg:h-[3rem]" variant="primaryButton">
+                        {
+                            loading ? "Logging in..." : "Log In"
+                        }
+                    </Button>
                 </form>
             </Form>
             <a className="w-full flex justify-end text-primary font-medium cursor-pointer text-[14px]">Forgot Password?</a>

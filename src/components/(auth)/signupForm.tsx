@@ -17,10 +17,30 @@ import Link from "next/link"
 import { signUpFormSchema } from "@/validation/authSchema"
 import { useState } from "react"
 import { Eye, EyeClosed} from "lucide-react"
+import { apiFetch } from "@/lib/api"
+import { useRouter } from "next/navigation"
+import { cn } from "@/lib/utils"
+import { toast } from "sonner"
+
+interface SignupResponse {
+    message: string;
+    access: string;
+    user: {
+        id: number;
+        email: string;
+        username: string;
+        phone: string;
+        name: string;
+    };
+}
 
 export default function SignUpForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [serverError, setServerError] = useState<string | null>(null);
+
+    const router = useRouter()
 
     const form = useForm<z.infer<typeof signUpFormSchema>>({
         resolver: zodResolver(signUpFormSchema),
@@ -33,9 +53,54 @@ export default function SignUpForm() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof signUpFormSchema>) {
-        console.log(values)
+
+    const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
+    setLoading(true);
+    setServerError(null);
+
+    try {
+        const payload = {
+        email: values.email,
+        password: values.password,
+        phone: values.phoneNumber,
+        name: values.name,
+        };
+
+        const data = await apiFetch<SignupResponse>("/accounts/register/", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        });
+
+        localStorage.setItem("talesoul_access", data.access);
+
+        toast.success("Signup successful! 🎉");
+        router.push("/");
+    } catch (error: unknown) {
+        if (error instanceof Error && "response" in error) {
+        const backend = (error as { response?: unknown }).response;
+
+        if (typeof backend === "object" && backend !== null) {
+            Object.entries(backend).forEach(([field, val]) => {
+            if (Array.isArray(val) && typeof val[0] === "string") {
+                form.setError(field as keyof z.infer<typeof signUpFormSchema>, {
+                type: "server",
+                message: val[0],
+                });
+
+                toast.error(`${field}: ${val[0]}`);
+            }
+            });
+        }
+        } else if (error instanceof Error) {
+        toast.error(error.message);
+        } else {
+        toast.error("Unknown error occurred");
+        }
+    } finally {
+        setLoading(false);
     }
+    };
+
 
     return (
         <div className="flex flex-col gap-1 sm:gap-4">
@@ -164,7 +229,9 @@ export default function SignUpForm() {
                         )}
                     />
 
-                    <Button type="submit" className="w-full h-[56px] md:h-[3.5rem] lg:h-[3rem]" variant="primaryButton">Sign Up</Button>
+                    <Button type="submit" className={cn("w-full h-[56px] md:h-[3.5rem] lg:h-[3rem]" , loading && "disabled")} variant="primaryButton">
+                        {loading ? "Creating account..." : "Sign Up"}
+                    </Button>
                 </form>
             </Form>
             <div className="relative text-center">

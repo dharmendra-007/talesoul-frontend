@@ -2,8 +2,9 @@ import React from 'react'
 
 export default function page() {
   return (
-    <div className='h-screen w-screen bg-orange-400 flex items-center justify-center'>
-        <h1 className='text-white text-3xl'>Blog page</h1>
+    <div className='h-screen w-full bg-primary flex items-center justify-center flex-col gap-4'>
+        <h1 className='heading1 !text-white'>Blog page</h1>
+        <h2 className='text-white'>Coming soon ....</h2>
     </div>
   )
 }
